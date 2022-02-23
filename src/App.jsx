@@ -15,28 +15,29 @@ export const App = () => {
     setTodoText('');
   }
 
-  const onClickDelete = (index) => {
-    const newTodos = [...incompleteTodos];
+  const deleteTodos = (index, todos, setTodos) => {
+    const newTodos = [...todos];
     newTodos.splice(index, 1);
-    setIncompleteTodos(newTodos);
+    setTodos(newTodos);
+  }
+
+  const onClickDelete = (index) => {
+    deleteTodos(index, incompleteTodos, setIncompleteTodos)
+  };
+
+  const addTodos = (todos, newTodo, setTodos) => {
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos)
   };
 
   const onClickComplete = (index) => {
-    const newIncompleteTodos = [...incompleteTodos];
-    newIncompleteTodos.splice(index, 1);
-
-    const newCompleteTodos = [...completeTodos, incompleteTodos[index]];
-    setIncompleteTodos(newIncompleteTodos);
-    setCompleteTodos(newCompleteTodos)
+    deleteTodos(index, incompleteTodos, setIncompleteTodos)
+    addTodos(completeTodos, incompleteTodos[index], setCompleteTodos)
   };
 
   const onClickBack = (index) => {
-    const newCompleteTodos = [...completeTodos];
-    newCompleteTodos.splice(index, 1);
-
-    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]]
-    setCompleteTodos(newCompleteTodos)
-    setIncompleteTodos(newIncompleteTodos)
+    deleteTodos(index, completeTodos, setCompleteTodos)
+    addTodos(incompleteTodos, completeTodos[index], setIncompleteTodos)
   };
 
   return (
